@@ -38,7 +38,22 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let word = expr.match(new RegExp(".{1," + 10 + "}", "g"));
+
+    for (let i = 0; i < word.length; i++) {
+        let lette = word[i].match(new RegExp(".{1," + 2 + "}", "g"));
+
+        word[i] = lette.map( y => {
+            if ( y === "10") return ".";
+            if ( y === "11") return "-";
+            if ( y === "00") return "";
+            return y;
+        }).join("");
+
+        word[i] = word[i].replace("**********", " ");
+    }
+    word = word.map( y => MORSE_TABLE[y] || y);
+    return word.join("");
 }
 
 module.exports = {
